@@ -1,6 +1,6 @@
 # C.I.D. Agencement — Format des ouvrages
 
-**Ruleset : 2026.10.09.1**  
+**Version globale active : lire `manifest.json`**  
 **Statut : actif — version initiale à enrichir au fil des validations utilisateur**
 
 Ce document décrit la forme attendue d'un ouvrage de devis. Il complète les règles générales sans les remplacer.
