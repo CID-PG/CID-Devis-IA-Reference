@@ -1,6 +1,6 @@
 # C.I.D. Agencement — Règles de chiffrage
 
-**Ruleset : 2026.10.09.1**
+**Version globale active : lire `manifest.json`**
 
 Ce document synthétise les règles de chiffrage transversales applicables aux devis. Une règle particulière explicitement fixée dans un dossier prévaut sur ce document.
 
