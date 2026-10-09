@@ -12,12 +12,13 @@ Un chat ou un outil IA doit lire le manifeste, puis charger dans l'ordre tous le
 
 ## Version active
 
-- Ruleset : `2026.10.09.1`
+- Ruleset : `2026.10.09.2`
 - Contrat JSON : `erp-artisans-quote-study` version `1.2`
 
 ## Contenu
 
 - `PROMPT_DEMARRAGE_DEVIS.md`
+- `GOUVERNANCE_REGLES.md`
 - `REGLES_GENERATION_DEVIS.md`
 - `FORMAT_OUVRAGES.md`
 - `REGLES_CHIFFRAGE.md`
@@ -42,3 +43,10 @@ Ne jamais publier ici :
 - des prix d'achat professionnels personnalisés ;
 - des identifiants, jetons ou clés API ;
 - des secrets d'infrastructure ou de comptes fournisseurs.
+
+
+## Évolution des règles
+
+Tous les chats de devis peuvent proposer une règle générale. Une règle n'est inscrite durablement que sur validation explicite de l'utilisateur, selon `GOUVERNANCE_REGLES.md`.
+
+`manifest.json` est l'autorité unique pour connaître la version active du ruleset. `CHANGELOG.md` conserve l'historique des évolutions.
