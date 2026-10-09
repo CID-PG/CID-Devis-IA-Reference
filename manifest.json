@@ -1,0 +1,61 @@
+{
+  "name": "C.I.D. Devis IA",
+  "manifest_version": "1.0",
+  "ruleset_version": "2026.10.09.1",
+  "status": "active",
+  "language": "fr-FR",
+  "entrypoint": "PROMPT_DEMARRAGE_DEVIS.md",
+  "contract": {
+    "format": "erp-artisans-quote-study",
+    "format_version": "1.2",
+    "schema": "erp-artisans-quote-study-1.2.schema.json"
+  },
+  "load_order": [
+    "PROMPT_DEMARRAGE_DEVIS.md",
+    "REGLES_GENERATION_DEVIS.md",
+    "FORMAT_OUVRAGES.md",
+    "REGLES_CHIFFRAGE.md",
+    "CONTRAT_DEVIS_1.2.md",
+    "erp-artisans-quote-study-1.2.schema.json",
+    "EXEMPLES_OUVRAGES.md"
+  ],
+  "documents": [
+    {
+      "id": "prompt",
+      "path": "PROMPT_DEMARRAGE_DEVIS.md",
+      "required": true
+    },
+    {
+      "id": "generation_rules",
+      "path": "REGLES_GENERATION_DEVIS.md",
+      "required": true
+    },
+    {
+      "id": "work_format",
+      "path": "FORMAT_OUVRAGES.md",
+      "required": true
+    },
+    {
+      "id": "pricing_rules",
+      "path": "REGLES_CHIFFRAGE.md",
+      "required": true
+    },
+    {
+      "id": "contract",
+      "path": "CONTRAT_DEVIS_1.2.md",
+      "required": true
+    },
+    {
+      "id": "schema",
+      "path": "erp-artisans-quote-study-1.2.schema.json",
+      "required": true
+    },
+    {
+      "id": "examples",
+      "path": "EXEMPLES_OUVRAGES.md",
+      "required": true
+    }
+  ],
+  "scope": "Règles transversales uniquement ; aucune donnée client ou chantier.",
+  "privacy": "Public : aucun secret, tarif fournisseur privé ou donnée personnelle ne doit être ajouté."
+}
