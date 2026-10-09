@@ -1,6 +1,6 @@
 # C.I.D. Agencement — Exemples d'ouvrages
 
-**Ruleset : 2026.10.09.1**
+**Version globale active : lire `manifest.json`**
 
 Ces exemples sont fictifs et servent uniquement de référence de structure et de rédaction.
 
