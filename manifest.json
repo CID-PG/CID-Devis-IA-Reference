@@ -1,7 +1,7 @@
 {
   "name": "C.I.D. Devis IA",
   "manifest_version": "1.0",
-  "ruleset_version": "2026.10.09.1",
+  "ruleset_version": "2026.10.09.2",
   "status": "active",
   "language": "fr-FR",
   "entrypoint": "PROMPT_DEMARRAGE_DEVIS.md",
@@ -12,6 +12,7 @@
   },
   "load_order": [
     "PROMPT_DEMARRAGE_DEVIS.md",
+    "GOUVERNANCE_REGLES.md",
     "REGLES_GENERATION_DEVIS.md",
     "FORMAT_OUVRAGES.md",
     "REGLES_CHIFFRAGE.md",
@@ -23,6 +24,11 @@
     {
       "id": "prompt",
       "path": "PROMPT_DEMARRAGE_DEVIS.md",
+      "required": true
+    },
+    {
+      "id": "rules_governance",
+      "path": "GOUVERNANCE_REGLES.md",
       "required": true
     },
     {
@@ -57,5 +63,6 @@
     }
   ],
   "scope": "Règles transversales uniquement ; aucune donnée client ou chantier.",
-  "privacy": "Public : aucun secret, tarif fournisseur privé ou donnée personnelle ne doit être ajouté."
+  "privacy": "Public : aucun secret, tarif fournisseur privé ou donnée personnelle ne doit être ajouté.",
+  "changelog": "CHANGELOG.md"
 }
