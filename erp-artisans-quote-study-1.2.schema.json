@@ -1,0 +1,1895 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://erp-artisans.invalid/schemas/erp-artisans-quote-study-1.2.schema.json",
+  "title": "ERP Artisans - Etude de devis IA 1.2",
+  "description": "Contrat complet, revisionne et multi-phase pour les echanges IA <-> utilisateur <-> ERP Artisans.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "format_version",
+    "exchange_id",
+    "revision",
+    "parent_revision",
+    "parent_sha256",
+    "exchange_kind",
+    "metadata",
+    "target",
+    "workflow",
+    "study",
+    "checks",
+    "review"
+  ],
+  "properties": {
+    "format": {
+      "const": "erp-artisans-quote-study"
+    },
+    "format_version": {
+      "const": "1.2"
+    },
+    "exchange_id": {
+      "$ref": "#/$defs/id"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "parent_revision": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1
+    },
+    "parent_sha256": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-fA-F0-9]{64}$"
+    },
+    "exchange_kind": {
+      "const": "full"
+    },
+    "metadata": {
+      "$ref": "#/$defs/metadata"
+    },
+    "target": {
+      "$ref": "#/$defs/target"
+    },
+    "workflow": {
+      "$ref": "#/$defs/workflow"
+    },
+    "study": {
+      "$ref": "#/$defs/study"
+    },
+    "checks": {
+      "type": "array",
+      "maxItems": 5000,
+      "items": {
+        "$ref": "#/$defs/check"
+      }
+    },
+    "review": {
+      "$ref": "#/$defs/review"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "revision": {
+            "const": 1
+          }
+        },
+        "required": [
+          "revision"
+        ]
+      },
+      "then": {
+        "properties": {
+          "parent_revision": {
+            "type": "null"
+          },
+          "parent_sha256": {
+            "type": "null"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "parent_revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "parent_sha256": {
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{64}$"
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "nullableNonNegativeNumber": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "nullablePositiveNumber": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "exclusiveMinimum": 0
+    },
+    "nullableDate": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nullableDateTime": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "to_confirm",
+        "confirmed",
+        "excluded"
+      ]
+    },
+    "webLink": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "required": [
+        "url",
+        "link_type",
+        "checked_at"
+      ],
+      "properties": {
+        "url": {
+          "type": "string",
+          "maxLength": 2048,
+          "pattern": "^https?://"
+        },
+        "link_type": {
+          "enum": [
+            "supplier",
+            "manufacturer",
+            "public_catalog",
+            "technical_sheet",
+            "installation_manual",
+            "other",
+            "unknown"
+          ]
+        },
+        "checked_at": {
+          "$ref": "#/$defs/nullableDateTime"
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "created_at",
+        "producer",
+        "source",
+        "language",
+        "currency"
+      ],
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "producer": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "source": {
+          "enum": [
+            "chatgpt",
+            "other_ai",
+            "erp_artisans",
+            "manual",
+            "migration"
+          ]
+        },
+        "language": {
+          "const": "fr-FR"
+        },
+        "currency": {
+          "const": "EUR"
+        }
+      }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "import_action",
+        "thirdparty_ref",
+        "project_ref",
+        "client_name_hint",
+        "project_title_hint"
+      ],
+      "properties": {
+        "import_action": {
+          "const": "create_draft_proposal"
+        },
+        "thirdparty_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 128
+        },
+        "project_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 128
+        },
+        "client_name_hint": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "project_title_hint": {
+          "type": "string",
+          "maxLength": 255
+        }
+      }
+    },
+    "workflow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "current_phase",
+        "intake",
+        "product_selection"
+      ],
+      "properties": {
+        "current_phase": {
+          "enum": [
+            "technical_intake",
+            "product_selection",
+            "detailed_review",
+            "ready_for_erp"
+          ]
+        },
+        "intake": {
+          "$ref": "#/$defs/intake"
+        },
+        "product_selection": {
+          "$ref": "#/$defs/productSelection"
+        }
+      }
+    },
+    "intake": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ai_understanding",
+        "user_correction",
+        "topics"
+      ],
+      "properties": {
+        "ai_understanding": {
+          "type": "string",
+          "maxLength": 20000
+        },
+        "user_correction": {
+          "type": "string",
+          "maxLength": 20000
+        },
+        "topics": {
+          "type": "array",
+          "maxItems": 200,
+          "items": {
+            "$ref": "#/$defs/topic"
+          }
+        }
+      }
+    },
+    "topic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "ai_summary",
+        "resolved_summary",
+        "user_notes",
+        "questions"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "ai_summary": {
+          "type": "string",
+          "maxLength": 10000
+        },
+        "resolved_summary": {
+          "type": "string",
+          "maxLength": 10000
+        },
+        "user_notes": {
+          "type": "string",
+          "maxLength": 20000
+        },
+        "questions": {
+          "type": "array",
+          "maxItems": 1000,
+          "items": {
+            "$ref": "#/$defs/intakeQuestion"
+          }
+        }
+      }
+    },
+    "questionOption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "label"
+      ],
+      "properties": {
+        "value": {
+          "type": [
+            "string",
+            "number",
+            "boolean"
+          ],
+          "maxLength": 255
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        }
+      }
+    },
+    "measureValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "unit"
+      ],
+      "properties": {
+        "value": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32
+        }
+      }
+    },
+    "dimensionsValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "width",
+        "height",
+        "depth",
+        "unit",
+        "precision"
+      ],
+      "properties": {
+        "width": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "height": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "depth": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "precision": {
+          "enum": [
+            "measured",
+            "approximate",
+            "to_check"
+          ]
+        }
+      }
+    },
+    "flexValue": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "maxLength": 20000
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "array",
+          "maxItems": 100,
+          "items": {
+            "type": [
+              "string",
+              "number",
+              "boolean"
+            ]
+          }
+        },
+        {
+          "$ref": "#/$defs/measureValue"
+        },
+        {
+          "$ref": "#/$defs/dimensionsValue"
+        }
+      ]
+    },
+    "visibilityLeaf": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "question_id",
+        "operator",
+        "value"
+      ],
+      "properties": {
+        "question_id": {
+          "$ref": "#/$defs/id"
+        },
+        "operator": {
+          "enum": [
+            "equals",
+            "not_equals",
+            "in"
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "null"
+              ]
+            },
+            {
+              "type": "array",
+              "maxItems": 100,
+              "items": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "visibility": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/visibilityLeaf"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "all"
+          ],
+          "properties": {
+            "all": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 20,
+              "items": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/visibilityLeaf"
+                  },
+                  {
+                    "$ref": "#/$defs/visibility"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "any"
+          ],
+          "properties": {
+            "any": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 20,
+              "items": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/visibilityLeaf"
+                  },
+                  {
+                    "$ref": "#/$defs/visibility"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "intakeResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "value",
+        "note"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "unanswered",
+            "answered",
+            "confirmed",
+            "to_check",
+            "not_applicable"
+          ]
+        },
+        "value": {
+          "$ref": "#/$defs/flexValue"
+        },
+        "note": {
+          "type": "string",
+          "maxLength": 10000
+        }
+      }
+    },
+    "intakeQuestion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "question",
+        "type",
+        "required",
+        "allow_to_check",
+        "priority",
+        "help",
+        "options",
+        "visibility",
+        "proposed_value",
+        "response"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "question": {
+          "type": "string",
+          "maxLength": 5000
+        },
+        "type": {
+          "enum": [
+            "single_choice",
+            "multiple_choice",
+            "yes_no",
+            "number",
+            "measure",
+            "dimensions",
+            "short_text",
+            "long_text",
+            "date",
+            "confirmation",
+            "information"
+          ]
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "allow_to_check": {
+          "type": "boolean"
+        },
+        "priority": {
+          "enum": [
+            "required_for_product_selection",
+            "required_for_detailed_review",
+            "required_for_erp_export",
+            "required_before_order",
+            "optional"
+          ]
+        },
+        "help": {
+          "type": "string",
+          "maxLength": 5000
+        },
+        "options": {
+          "type": "array",
+          "maxItems": 100,
+          "items": {
+            "$ref": "#/$defs/questionOption"
+          }
+        },
+        "visibility": {
+          "$ref": "#/$defs/visibility"
+        },
+        "proposed_value": {
+          "$ref": "#/$defs/flexValue"
+        },
+        "response": {
+          "$ref": "#/$defs/intakeResponse"
+        }
+      }
+    },
+    "productSelection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "needs"
+      ],
+      "properties": {
+        "needs": {
+          "type": "array",
+          "maxItems": 1000,
+          "items": {
+            "$ref": "#/$defs/productNeed"
+          }
+        }
+      }
+    },
+    "productLink": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "label",
+        "url"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "supplier",
+            "manufacturer",
+            "technical_sheet",
+            "installation_manual",
+            "other"
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "url": {
+          "type": "string",
+          "maxLength": 2048,
+          "pattern": "^https?://"
+        }
+      }
+    },
+    "candidatePricing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "purchase_price_ht",
+        "sale_price_ht",
+        "source",
+        "date"
+      ],
+      "properties": {
+        "purchase_price_ht": {
+          "$ref": "#/$defs/nullableNonNegativeNumber"
+        },
+        "sale_price_ht": {
+          "$ref": "#/$defs/nullableNonNegativeNumber"
+        },
+        "source": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "date": {
+          "$ref": "#/$defs/nullableDate"
+        }
+      }
+    },
+    "productCandidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "origin",
+        "label",
+        "brand",
+        "reference",
+        "supplier",
+        "supplier_reference",
+        "manufacturer_reference",
+        "image_url",
+        "links",
+        "pricing",
+        "key_features",
+        "ai_reason",
+        "warnings"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "origin": {
+          "enum": [
+            "ai",
+            "user"
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "brand": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "reference": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "supplier": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "supplier_reference": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "manufacturer_reference": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "image_url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 2048,
+          "pattern": "^https?://"
+        },
+        "links": {
+          "type": "array",
+          "maxItems": 20,
+          "items": {
+            "$ref": "#/$defs/productLink"
+          }
+        },
+        "pricing": {
+          "$ref": "#/$defs/candidatePricing"
+        },
+        "key_features": {
+          "type": "array",
+          "maxItems": 50,
+          "items": {
+            "type": "string",
+            "maxLength": 1000
+          }
+        },
+        "ai_reason": {
+          "type": "string",
+          "maxLength": 5000
+        },
+        "warnings": {
+          "type": "array",
+          "maxItems": 50,
+          "items": {
+            "type": "string",
+            "maxLength": 5000
+          }
+        }
+      }
+    },
+    "userProduct": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "url",
+            "notes"
+          ],
+          "properties": {
+            "url": {
+              "type": "string",
+              "maxLength": 2048,
+              "pattern": "^https?://"
+            },
+            "notes": {
+              "type": "string",
+              "maxLength": 10000
+            }
+          }
+        }
+      ]
+    },
+    "productDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "candidate_id",
+        "rejected_candidate_ids",
+        "reasons",
+        "notes",
+        "request_scope",
+        "user_product"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "to_decide",
+            "retained",
+            "retained_with_reservation",
+            "new_search_requested",
+            "user_product_to_analyze",
+            "supplied_by_client",
+            "existing_kept",
+            "excluded"
+          ]
+        },
+        "candidate_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 128
+        },
+        "rejected_candidate_ids": {
+          "type": "array",
+          "maxItems": 100,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "reasons": {
+          "type": "array",
+          "maxItems": 20,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "too_expensive",
+              "wrong_finish",
+              "wrong_dimensions",
+              "technical_incompatibility",
+              "appearance",
+              "availability",
+              "other"
+            ]
+          }
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 10000
+        },
+        "user_product": {
+          "$ref": "#/$defs/userProduct"
+        },
+        "request_scope": {
+          "enum": [
+            null,
+            "product",
+            "need"
+          ],
+          "description": "Portée d'une demande de nouvelle recherche : autre produit pour le même besoin, ou redéfinition du besoin lui-même. Null hors demande concernée."
+        }
+      }
+    },
+    "productNeed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "topic_id",
+        "label",
+        "criteria_summary",
+        "supply_mode",
+        "required",
+        "candidates",
+        "decision"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "topic_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 128
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "criteria_summary": {
+          "type": "string",
+          "maxLength": 10000
+        },
+        "supply_mode": {
+          "enum": [
+            "cid",
+            "client",
+            "existing",
+            "not_required"
+          ]
+        },        "required": {
+          "type": "boolean"
+        },
+        "candidates": {
+          "type": "array",
+          "maxItems": 20,
+          "items": {
+            "$ref": "#/$defs/productCandidate"
+          }
+        },
+        "decision": {
+          "$ref": "#/$defs/productDecision"
+        }
+      }
+    },
+    "study": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "need",
+        "internal_notes",
+        "commercial",
+        "sections"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "need": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20000
+        },
+        "internal_notes": {
+          "type": "string",
+          "maxLength": 20000
+        },
+        "commercial": {
+          "$ref": "#/$defs/commercial"
+        },
+        "sections": {
+          "type": "array",
+          "maxItems": 100,
+          "items": {
+            "$ref": "#/$defs/section"
+          }
+        }
+      }
+    },
+    "commercial": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "proposal_date",
+        "valid_until",
+        "payment_terms_code",
+        "payment_method_code"
+      ],
+      "properties": {
+        "proposal_date": {
+          "$ref": "#/$defs/nullableDate"
+        },
+        "valid_until": {
+          "$ref": "#/$defs/nullableDate"
+        },
+        "payment_terms_code": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 64
+        },
+        "payment_method_code": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 64
+        }
+      }
+    },
+    "section": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "description",
+        "status",
+        "works"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 10000
+        },
+        "status": {
+          "$ref": "#/$defs/status"
+        },
+        "works": {
+          "type": "array",
+          "maxItems": 500,
+          "items": {
+            "$ref": "#/$defs/work"
+          }
+        }
+      }
+    },
+    "workCalculation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "margin_coefficient",
+        "manual_sale_price_ht",
+        "fixed_sale_price_ht",
+        "vat_rate"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "components_sum",
+            "cost_margin",
+            "free_price",
+            "to_confirm"
+          ]
+        },
+        "margin_coefficient": {
+          "$ref": "#/$defs/nullableNonNegativeNumber"
+        },
+        "manual_sale_price_ht": {
+          "$ref": "#/$defs/nullableNonNegativeNumber"
+        },
+        "fixed_sale_price_ht": {
+          "$ref": "#/$defs/nullableNonNegativeNumber"
+        },
+        "vat_rate": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 100
+        }
+      }
+    },
+    "presentation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "work_only",
+            "work_description",
+            "selected_components",
+            "commercial_detail",
+            "to_confirm"
+          ]
+        }
+      }
+    },
+    "supplier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name_hint",
+        "supplier_ref",
+        "manufacturer_ref"
+      ],
+      "properties": {
+        "name_hint": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "supplier_ref": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "manufacturer_ref": {
+          "type": "string",
+          "maxLength": 255
+        }
+      }
+    },
+    "componentPricing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "purchase_unit_price_ht",
+        "sale_unit_price_ht",
+        "fixed_sale_price_ht",
+        "price_source",
+        "price_date"
+      ],
+      "properties": {
+        "purchase_unit_price_ht": {
+          "$ref": "#/$defs/nullableNonNegativeNumber"
+        },
+        "sale_unit_price_ht": {
+          "$ref": "#/$defs/nullableNonNegativeNumber"
+        },
+        "fixed_sale_price_ht": {
+          "$ref": "#/$defs/nullableNonNegativeNumber"
+        },
+        "price_source": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "price_date": {
+          "$ref": "#/$defs/nullableDate"
+        }
+      }
+    },
+    "packaging": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "need_quantity",
+        "consumption_quantity",
+        "package_quantity",
+        "package_unit",
+        "purchase_package_count",
+        "purchased_quantity",
+        "remainder_quantity",
+        "charge_mode"
+      ],
+      "properties": {
+        "need_quantity": {
+          "$ref": "#/$defs/nullableNonNegativeNumber"
+        },
+        "consumption_quantity": {
+          "$ref": "#/$defs/nullableNonNegativeNumber"
+        },
+        "package_quantity": {
+          "$ref": "#/$defs/nullableNonNegativeNumber"
+        },
+        "package_unit": {
+          "type": "string",
+          "maxLength": 32
+        },
+        "purchase_package_count": {
+          "$ref": "#/$defs/nullableNonNegativeNumber"
+        },
+        "purchased_quantity": {
+          "$ref": "#/$defs/nullableNonNegativeNumber"
+        },
+        "remainder_quantity": {
+          "$ref": "#/$defs/nullableNonNegativeNumber"
+        },
+        "charge_mode": {
+          "enum": [
+            "need",
+            "full_package",
+            "to_confirm"
+          ]
+        }
+      }
+    },
+    "component": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "dolibarr_product_ref",
+        "work_library_ref",
+        "reference",
+        "label",
+        "description",
+        "product_link",
+        "quantity",
+        "unit",
+        "unit_code",
+        "status",
+        "supplier",
+        "pricing",
+        "packaging",
+        "selection_origin",
+        "client_visible",
+        "children"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "type": {
+          "enum": [
+            "product",
+            "service",
+            "labor",
+            "free",
+            "subwork",
+            "comment"
+          ]
+        },
+        "dolibarr_product_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 128
+        },
+        "work_library_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 128
+        },
+        "reference": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 20000
+        },
+        "product_link": {
+          "$ref": "#/$defs/webLink"
+        },
+        "quantity": {
+          "$ref": "#/$defs/nullablePositiveNumber"
+        },
+        "unit": {
+          "type": "string",
+          "maxLength": 32
+        },
+        "unit_code": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 32
+        },
+        "status": {
+          "$ref": "#/$defs/status"
+        },
+        "supplier": {
+          "$ref": "#/$defs/supplier"
+        },
+        "pricing": {
+          "$ref": "#/$defs/componentPricing"
+        },
+        "packaging": {
+          "$ref": "#/$defs/packaging"
+        },
+        "client_visible": {
+          "type": "boolean"
+        },
+        "children": {
+          "type": "array",
+          "maxItems": 1000,
+          "items": {
+            "$ref": "#/$defs/component"
+          }
+        },
+        "selection_origin": {
+          "$ref": "#/$defs/selectionOrigin"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "not": {
+                  "const": "subwork"
+                }
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "children": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "comment"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "quantity": {
+                "type": "null"
+              },
+              "unit": {
+                "const": ""
+              },
+              "unit_code": {
+                "type": "null"
+              },
+              "product_link": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "work": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "library_ref",
+        "work_role",
+        "reference",
+        "label",
+        "description",
+        "quantity",
+        "unit",
+        "unit_code",
+        "status",
+        "calculation",
+        "presentation",
+        "components"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "library_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 128
+        },
+        "work_role": {
+          "enum": [
+            "standard",
+            "option",
+            "information"
+          ]
+        },
+        "reference": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 20000
+        },
+        "quantity": {
+          "$ref": "#/$defs/nullablePositiveNumber"
+        },
+        "unit": {
+          "type": "string",
+          "maxLength": 32
+        },
+        "unit_code": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 32
+        },
+        "status": {
+          "$ref": "#/$defs/status"
+        },
+        "calculation": {
+          "$ref": "#/$defs/workCalculation"
+        },
+        "presentation": {
+          "$ref": "#/$defs/presentation"
+        },
+        "components": {
+          "type": "array",
+          "maxItems": 1000,
+          "items": {
+            "$ref": "#/$defs/component"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "confirmed"
+              },
+              "work_role": {
+                "not": {
+                  "const": "information"
+                }
+              }
+            },
+            "required": [
+              "status",
+              "work_role"
+            ]
+          },
+          "then": {
+            "properties": {
+              "quantity": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "checkTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "id"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "global",
+            "topic",
+            "question",
+            "product_need",
+            "candidate",
+            "work",
+            "component"
+          ]
+        },
+        "id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 128
+        }
+      }
+    },
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "category",
+        "label",
+        "question",
+        "severity",
+        "status",
+        "decision",
+        "target",
+        "required_before"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "category": {
+          "enum": [
+            "client",
+            "project",
+            "technical",
+            "quantity",
+            "product",
+            "price",
+            "commercial",
+            "other"
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "question": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 5000
+        },
+        "severity": {
+          "enum": [
+            "blocking",
+            "warning",
+            "information"
+          ]
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "resolved",
+            "not_applicable"
+          ]
+        },
+        "decision": {
+          "type": "string",
+          "maxLength": 5000
+        },
+        "target": {
+          "$ref": "#/$defs/checkTarget"
+        },
+        "required_before": {
+          "enum": [
+            "product_selection",
+            "detailed_review",
+            "erp_export",
+            "order",
+            "none"
+          ]
+        }
+      }
+    },
+    "workReview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "work_id",
+        "decision",
+        "notes"
+      ],
+      "properties": {
+        "work_id": {
+          "$ref": "#/$defs/id"
+        },
+        "decision": {
+          "enum": [
+            "to_confirm",
+            "retained",
+            "excluded",
+            "modify_with_ai"
+          ]
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 10000
+        }
+      }
+    },
+    "componentReplacement": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "reference",
+            "label",
+            "product_link"
+          ],
+          "properties": {
+            "reference": {
+              "type": "string",
+              "maxLength": 128
+            },
+            "label": {
+              "type": "string",
+              "maxLength": 255
+            },
+            "product_link": {
+              "$ref": "#/$defs/webLink"
+            }
+          }
+        }
+      ]
+    },
+    "componentReview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "component_id",
+        "decision",
+        "replacement",
+        "notes"
+      ],
+      "properties": {
+        "component_id": {
+          "$ref": "#/$defs/id"
+        },
+        "decision": {
+          "enum": [
+            "to_confirm",
+            "retained",
+            "excluded",
+            "replaced",
+            "modify_with_ai"
+          ]
+        },
+        "replacement": {
+          "$ref": "#/$defs/componentReplacement"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 10000
+        }
+      }
+    },
+    "bulkDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "match",
+        "change",
+        "affected_component_ids",
+        "notes"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "match": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "field",
+            "value"
+          ],
+          "properties": {
+            "field": {
+              "enum": [
+                "reference",
+                "dolibarr_product_ref"
+              ]
+            },
+            "value": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          }
+        },
+        "change": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "field",
+            "number_value",
+            "text_value",
+            "source"
+          ],
+          "properties": {
+            "field": {
+              "enum": [
+                "purchase_unit_price_ht",
+                "sale_unit_price_ht",
+                "unit_code",
+                "status"
+              ]
+            },
+            "number_value": {
+              "$ref": "#/$defs/nullableNonNegativeNumber"
+            },
+            "text_value": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "maxLength": 255
+            },
+            "source": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1000
+            }
+          }
+        },
+        "affected_component_ids": {
+          "type": "array",
+          "maxItems": 5000,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 10000
+        }
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "reviewed_at",
+        "reviewer",
+        "general_notes",
+        "works",
+        "components",
+        "bulk_decisions"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "ai_proposal",
+            "human_review",
+            "returned_to_ai"
+          ]
+        },
+        "reviewed_at": {
+          "$ref": "#/$defs/nullableDateTime"
+        },
+        "reviewer": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "general_notes": {
+          "type": "string",
+          "maxLength": 20000
+        },
+        "works": {
+          "type": "array",
+          "maxItems": 500,
+          "items": {
+            "$ref": "#/$defs/workReview"
+          }
+        },
+        "components": {
+          "type": "array",
+          "maxItems": 5000,
+          "items": {
+            "$ref": "#/$defs/componentReview"
+          }
+        },
+        "bulk_decisions": {
+          "type": "array",
+          "maxItems": 500,
+          "items": {
+            "$ref": "#/$defs/bulkDecision"
+          }
+        }
+      }
+    },
+    "selectionOrigin": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "product_need_id",
+            "candidate_id"
+          ],
+          "properties": {
+            "product_need_id": {
+              "$ref": "#/$defs/id"
+            },
+            "candidate_id": {
+              "$ref": "#/$defs/id"
+            }
+          }
+        }
+      ],
+      "description": "Traçabilité d’un composant produit issu d’un choix du Mode 2. Null si le composant ne provient pas directement d’un besoin produit retenu."
+    }
+  }
+}
