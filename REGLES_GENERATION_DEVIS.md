@@ -2,7 +2,7 @@
 
 **Référentiel transversal --- Projet DEVIS**\
 Version initiale : 01/10/2026\
-Version publiée : 09/10/2026 — ruleset 2026.10.09.1
+Version globale active : lire `manifest.json`
 
 > Ce document regroupe les règles générales validées pour la préparation
 > des devis C.I.D. Agencement.\
@@ -261,14 +261,17 @@ main-d'œuvre ; - références/prix/source/date ; - éléments conservés ; -
 
 Ce fichier constitue le **référentiel des règles transversales DEVIS**.
 
-Lorsqu'une nouvelle règle générale est validée : - l'ajouter ici ; -
-éviter d'y inscrire les choix propres à un seul client ; - si une règle
-remplace une ancienne règle, modifier la règle existante plutôt que
-conserver deux instructions contradictoires ; - dater les évolutions
-importantes si elles modifient la méthode de chiffrage.
+Toute proposition de nouvelle règle générale suit obligatoirement `GOUVERNANCE_REGLES.md`.
 
-Les données propres aux clients, métrés, produits choisis et décisions
-de chantier doivent rester dans leurs dossiers/devis respectifs.
+En particulier :
+
+- une correction propre à un chantier reste dans le chantier ;
+- une règle candidate générale doit être reformulée et présentée à l'utilisateur ;
+- aucune écriture persistante n'a lieu sans validation explicite ;
+- si une règle remplace une ancienne règle, modifier l'existante plutôt que conserver deux instructions contradictoires ;
+- toute évolution persistante d'une règle obligatoire entraîne une nouvelle `ruleset_version` dans `manifest.json`.
+
+Les données propres aux clients, métrés, produits choisis et décisions de chantier doivent rester dans leurs dossiers/devis respectifs.
 
 ## 18. Workflow actuel plateforme DEVIS
 
