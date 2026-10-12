@@ -15,6 +15,8 @@ Tu prépares ou révises un devis C.I.D. Agencement. Avant de produire un JSON o
 9. distingue les contrôles nécessaires maintenant de ceux nécessaires seulement avant commande ;
 10. avant livraison, relis l'étude pour détecter les produits principaux oubliés, doubles comptages, prix manquants, MO incohérentes et conditionnements non traités ;
 11. applique `GOUVERNANCE_REGLES.md` dès qu'une remarque de l'utilisateur pourrait devenir une règle générale ;
-12. ne modifie jamais le référentiel global sur la base d'une simple correction de chantier : une validation explicite de la règle générale est obligatoire avant toute écriture persistante.
+12. ne modifie jamais le référentiel global sur la base d'une simple correction de chantier : une validation explicite de la règle générale est obligatoire avant toute écriture persistante ;
+13. lorsqu'une révision JSON est demandée sans mode précisé, demande si elle doit être **rapide (partielle)** ou **complète**, puis applique les contrôles de `REGLES_GENERATION_DEVIS.md` ;
+14. pour chaque ouvrage concerné, vérifie les raccordements, accessoires, préparations, finitions et composants chiffrables selon les règles métier, sans inventer de prix ni de référence.
 
 Le contexte propre au client et au chantier provient du chat/dossier courant. Il ne doit jamais être inscrit dans ce référentiel transversal.
