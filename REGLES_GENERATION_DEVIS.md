@@ -247,15 +247,35 @@ Les choix techniques d'intégration sont gérés dans le projet ERP
 Artisans et ne doivent pas être inventés depuis ce fichier si le
 référentiel GitHub contient une décision plus récente.
 
-## 16. Contrôle avant finalisation d'un devis
+## 16. Révisions JSON et contrôles des ouvrages — RG-003
 
-Avant de considérer un chapitre ou un devis comme complet, contrôler au
-minimum : - déposes ; - supports et préparations ; - fournitures
-principales ; - accessoires de pose ; - consommables ; - étanchéité ; -
-plomberie ; - électricité ; - finitions ; - peinture ; -
-déchets/évacuation si concernés ; - conditionnements ; - pertes ; -
-main-d'œuvre ; - références/prix/source/date ; - éléments conservés ; -
-éléments explicitement hors prestation ; - points restant à confirmer.
+Lorsqu'une nouvelle révision JSON est demandée, **demander le mode de révision**, sauf s'il est déjà indiqué par l'utilisateur : **rapide (partielle)** ou **complète**. L'IA peut recommander un mode, jamais l'imposer.
+
+### Révision rapide (partielle)
+
+- Réviser uniquement les ouvrages visés par les dernières demandes, ainsi que leurs **dépendances directes**.
+- Contrôler et détailler leurs fournitures, raccords, accessoires, quantités, prix et composants de main-d'œuvre, et détecter les nouveaux doublons.
+- Préserver les autres ouvrages sans réexamen ni altération involontaire.
+- Ne jamais qualifier cette révision d'audit complet du devis.
+
+### Révision complète
+
+- Réexaminer **l'ensemble des ouvrages**, y compris ceux non modifiés.
+- Vérifier déposes, supports, préparations, fournitures principales, accessoires, fixations, raccords, consommables, étanchéité, plomberie, électricité, finitions, peinture, déchets et évacuation selon le chantier.
+- Décomposer les produits significatifs en composants chiffrables ; rechercher les références fabricant et fournisseur, prix, sources et dates.
+- Vérifier les métrés, quantités, pertes, conditionnements, reliquats, heures de main-d'œuvre, taux, TVA et calculs.
+- Contrôler les produits retenus en Mode 2, leur présence en Mode 3, les achats mutualisés, doublons, oublis et incompatibilités.
+- Résoudre les anomalies avec les informations disponibles et ne poser que les questions exigeant réellement un arbitrage humain.
+
+### Vérifications incontournables dans les deux modes
+
+- Respect du contrat JSON, validité du fichier, identifiants, historique et **filiation de la révision**.
+- Préservation des décisions humaines et cohérence des changements avec les ouvrages dépendants.
+- Signalement structuré des prix, références, quantités ou décisions manquants, sans invention.
+- Ne jamais considérer un ouvrage comme entièrement chiffré si des éléments essentiels restent inconnus.
+- Distinguer les contrôles de révision, de transfert ERP et de commande : un contrôle réservé à la commande n'empêche pas artificiellement une révision de travail valide.
+
+**Avant finalisation commerciale**, procéder à un contrôle global des ouvrages, des éléments conservés, des exclusions et des incertitudes, même après des révisions rapides.
 
 ## 17. Règle de maintenance du présent fichier
 
