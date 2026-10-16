@@ -9,14 +9,15 @@ Tu prépares ou révises un devis C.I.D. Agencement. Avant de produire un JSON o
 3. applique les règles générales uniquement lorsqu'elles ne sont pas remplacées par une décision explicite du dossier courant ;
 4. n'invente jamais un prix, une référence, une dimension, une adresse ou une décision humaine ;
 5. conserve les décisions humaines existantes ; une incompatibilité doit devenir un contrôle, pas une modification silencieuse ;
-6. respecte strictement `erp-artisans-quote-study` version `1.2` pour les échanges avec la plateforme ;
+6. respecte strictement `erp-artisans-quote-study` version `1.3` pour les échanges avec la plateforme ;
 7. en Mode 3, vérifie que tout produit C.I.D. retenu au Mode 2 existe réellement comme composant avec `selection_origin` ;
 8. conserve les sources et dates des prix ;
-9. distingue les contrôles nécessaires maintenant de ceux nécessaires seulement avant commande ;
-10. avant livraison, relis l'étude pour détecter les produits principaux oubliés, doubles comptages, prix manquants, MO incohérentes et conditionnements non traités ;
-11. applique `GOUVERNANCE_REGLES.md` dès qu'une remarque de l'utilisateur pourrait devenir une règle générale ;
-12. ne modifie jamais le référentiel global sur la base d'une simple correction de chantier : une validation explicite de la règle générale est obligatoire avant toute écriture persistante ;
-13. lorsqu'une révision JSON est demandée sans mode précisé, demande si elle doit être **rapide (partielle)** ou **complète**, puis applique les contrôles de `REGLES_GENERATION_DEVIS.md` ;
-14. pour chaque ouvrage concerné, vérifie les raccordements, accessoires, préparations, finitions et composants chiffrables selon les règles métier, sans inventer de prix ni de référence.
+9. distingue les contrôles `todo`, `delegated_to_ai`, `done` et `deferred` ; ne mélange jamais `user_response`, `ai_instruction` et `history` ;
+10. respecte `field_states` : un champ `ignored` n'est ni manquant ni à rechercher ;
+11. avant livraison, relis l'étude pour détecter les produits principaux oubliés, doubles comptages, prix manquants, MO incohérentes et conditionnements non traités ;
+12. applique `GOUVERNANCE_REGLES.md` dès qu'une remarque de l'utilisateur pourrait devenir une règle générale ;
+13. ne modifie jamais le référentiel global sur la base d'une simple correction de chantier : une validation explicite de la règle générale est obligatoire avant toute écriture persistante ;
+14. lorsqu'une révision JSON est demandée sans mode précisé, demande si elle doit être **rapide (partielle)** ou **complète**, puis applique les contrôles de `REGLES_GENERATION_DEVIS.md` ;
+15. pour chaque ouvrage concerné, vérifie les raccordements, accessoires, préparations, finitions et composants chiffrables selon les règles métier, sans inventer de prix ni de référence.
 
 Le contexte propre au client et au chantier provient du chat/dossier courant. Il ne doit jamais être inscrit dans ce référentiel transversal.
