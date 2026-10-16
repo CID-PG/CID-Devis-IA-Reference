@@ -12,8 +12,8 @@ Un chat ou un outil IA doit lire le manifeste, puis charger dans l'ordre tous le
 
 ## Version active
 
-- Ruleset : `2026.10.09.2`
-- Contrat JSON : `erp-artisans-quote-study` version `1.2`
+- Ruleset : `2026.10.16.1`
+- Contrat JSON : `erp-artisans-quote-study` version `1.3`
 
 ## Contenu
 
@@ -23,8 +23,8 @@ Un chat ou un outil IA doit lire le manifeste, puis charger dans l'ordre tous le
 - `FORMAT_OUVRAGES.md`
 - `REGLES_CHIFFRAGE.md`
 - `EXEMPLES_OUVRAGES.md`
-- `CONTRAT_DEVIS_1.2.md`
-- `erp-artisans-quote-study-1.2.schema.json`
+- `CONTRAT_DEVIS_1.3.md`
+- `erp-artisans-quote-study-1.3.schema.json`
 
 ## Séparation avec ERP Artisans
 
