@@ -301,7 +301,9 @@ Le workflow courant est organisé en trois modes :
 2. **Mode 2 — Produits spécifiques** : proposer uniquement les produits qui constituent un vrai choix client ou technique, conserver les refus et leurs motifs, permettre une précision libre pour l'IA et distinguer une recherche d'un autre produit d'une modification du besoin (`request_scope`).
 3. **Mode 3 — Revue détaillée** : construire l'étude complète par sections, ouvrages et composants ; appliquer une revue par exception ; distinguer les contrôles à traiter maintenant de ceux à vérifier plus tard.
 
-La sortie courante est un JSON `erp-artisans-quote-study` version `1.2`, exploitable par la plateforme, l'Assistant de devis autonome et, à terme, ERP Artisans.
+La sortie courante est un JSON `erp-artisans-quote-study` version `1.3`, exploitable par la plateforme, l'Assistant de devis autonome et, à terme, ERP Artisans.
+
+En contrat 1.3, les contrôles séparent explicitement `user_response`, `ai_instruction`, `history` et `user_action_state`. Un point `delegated_to_ai` reste techniquement ouvert mais sort de la liste des actions attendues de l'utilisateur.
 
 Les décisions humaines prises dans les Modes 1 et 2 sont autoritaires : une révision IA peut signaler une incompatibilité ou créer un contrôle, mais ne doit pas les remplacer silencieusement.
 
