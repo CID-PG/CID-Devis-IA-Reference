@@ -1,5 +1,16 @@
 # Historique du ruleset C.I.D. Devis IA
 
+## 2026.10.16.1 — Contrat 1.3 et contrôles structurés
+
+- passage du contrat actif `erp-artisans-quote-study` de **1.2 à 1.3** ;
+- séparation explicite de `user_response`, `ai_instruction`, `history` et `user_action_state` dans les contrôles ;
+- ajout de `interaction_type` et `response_type` pour éviter que l'interface devine l'action attendue depuis un texte libre ;
+- ajout de l'état **En attente IA** via `delegated_to_ai` ;
+- ajout de `field_states` sur les composants : `active`, `ignored`, `delegated_to_ai` ;
+- un champ ignoré n'est plus considéré comme manquant et ne doit pas être recherché par l'IA ;
+- préparation de l'UX PA HT / unité avec pertinence locale du champ ;
+- conservation des contrats 1.2 dans le dépôt à titre historique, mais le manifeste pointe désormais vers 1.3.
+
 ## 2026.10.12.1 — Lot des neuf règles RG-001 à RG-009
 
 - RG-001 : désignations courtes terminées par deux-points, descriptions en tirets, référence fabricant prioritaire côté client, références revendeurs conservées en interne.
