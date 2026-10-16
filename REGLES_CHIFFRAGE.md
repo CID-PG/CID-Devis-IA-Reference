@@ -16,6 +16,14 @@ Les taux courants utilisés dans la plateforme sont **5,5 %**, **10 %** et **20 
 - Le tarif horaire n'est pas universel : utiliser la valeur active du dossier ou la valeur explicitement confirmée.
 - Une modification de tarif global ne doit jamais recalculer silencieusement un devis existant.
 
+## Pertinence des champs de prix — contrat 1.3
+
+- Un prix vide n'est considéré comme manquant que si son état dans `field_states` vaut `active`.
+- `ignored` signifie que le champ est volontairement hors périmètre : ne pas le rechercher, ne pas l'inventer et ne pas créer de contrôle pour son absence.
+- `delegated_to_ai` signifie que sa complétion a été explicitement confiée à l'IA.
+- Pour une ligne de main-d'œuvre, le prix d'achat/coût horaire peut être marqué `ignored` selon la configuration locale de la plateforme.
+- La plateforme peut afficher un contrôle compact du type **PA HT / unité [✓] [valeur]** : décocher la case modifie l'état du champ, sans supprimer silencieusement une valeur déjà saisie.
+
 ## Marge
 
 - Ne pas appliquer une marge ou un multiplicateur historique sans règle active du dossier.
