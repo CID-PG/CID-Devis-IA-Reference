@@ -29,6 +29,17 @@ Le libellé doit être court, lisible et décrire la prestation, pas le calcul i
 
 Le nom commercial d'un produit peut apparaître lorsque le modèle, le décor ou la gamme constitue un choix explicite du client. Sinon, rester générique dans le libellé et conserver la référence détaillée dans le composant produit.
 
+### Présentation normalisée — RG-001
+
+- Le `label` est **court et explicite**, terminé par deux-points (`:`) : « Fourniture et pose de… », « Pose de… », « Dépose de… » ou autre libellé fidèle à la prestation.
+- Ne pas répéter inutilement le nom du chapitre ou de la pièce déjà présent dans la section.
+- La `description` client détaille les actions et éléments majeurs sous forme de **lignes commençant par un tiret** : fourniture, préparation, mise en œuvre, raccordements et finitions selon le cas.
+- Lorsque connus, citer marque, gamme, modèle et **référence fabricant** des produits principaux, sans exposer de calculs de prix, consommations ou marges.
+- Pour une **marque indépendante** : indiquer prioritairement la référence fabricant, sans substituer le code commercial d'un revendeur interchangeable.
+- Pour une **marque de distributeur** : utiliser la référence commerciale du distributeur en l'absence de référence fabricant distincte.
+- Lorsqu'aucune référence fabricant fiable n'est connue, ne pas l'inventer ; la référence fournisseur peut servir provisoirement, sous réserve d'identification.
+- Dans les **composants internes** : conserver les deux références fabricant/fournisseur lorsqu'elles sont disponibles, ainsi que fournisseur, prix d'achat, source et date.
+
 ## 3. Description client
 
 La description explique **ce qui sera réalisé**. Elle doit rester commerciale et compréhensible.
@@ -44,7 +55,7 @@ Inclure lorsque pertinent :
 
 Éviter dans la description client :
 
-- références fournisseur sans intérêt commercial ;
+- références de revendeurs interchangeables si une référence fabricant fiable est disponible, sauf marque de distributeur ou fabricant non encore identifié ;
 - calculs de marge ;
 - nombre de vis, cartouches ou petits raccords ;
 - notes internes ;
@@ -63,6 +74,16 @@ Ordre recommandé :
 5. commentaires ou sous-ouvrages si nécessaire.
 
 Un produit principal retenu au Mode 2 et fourni par C.I.D. doit apparaître comme composant `product`. Son origine de sélection est conservée par `selection_origin`.
+
+### Décomposition des fournitures — RG-007
+
+- Chaque produit **identifiable, nécessaire et significatif** pour le prix, les achats ou la technique doit avoir un composant distinct.
+- Ne pas masquer ces articles sous « raccords divers », « petites fournitures » ou « accessoires de pose » si leurs natures et quantités peuvent être identifiées.
+- Pour chaque article, rechercher désignation, marque, références fabricant et fournisseur, unité, quantité, prix d'achat HT, source/date et conditionnement, lorsque disponibles.
+- Des regroupements restent possibles pour de **véritables kits commerciaux** vendus ensemble, ou des consommables accessoires de très faible importance dont le détail n'améliore pas le chiffrage.
+- Si un élément nécessaire n'est pas encore défini, le signaler dans une ligne explicite et créer un contrôle : ne pas inventer de prix ou de référence.
+- Conserver les consommations propres aux ouvrages, mutualiser les achats compatibles et ne pas compter deux fois les mêmes fournitures.
+- Le détail concerne les **composants internes** : ne pas transformer la description client en liste de petites pièces.
 
 ## 5. Main-d'œuvre
 

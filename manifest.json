@@ -1,7 +1,7 @@
 {
   "name": "C.I.D. Devis IA",
   "manifest_version": "1.0",
-  "ruleset_version": "2026.10.09.2",
+  "ruleset_version": "2026.10.12.1",
   "status": "active",
   "language": "fr-FR",
   "entrypoint": "PROMPT_DEMARRAGE_DEVIS.md",
