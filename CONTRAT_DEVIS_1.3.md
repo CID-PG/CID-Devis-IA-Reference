@@ -8,7 +8,7 @@
 
 ## 1. Contexte
 
-Le contrat 1.1 couvre correctement une étude de devis détaillée et révisée :
+Le contrat 1.2 couvre correctement l’étude multi-phase et révisée :
 
 - filiation par `exchange_id`, `revision`, `parent_revision`, `parent_sha256` ;
 - structure métier `study.sections[] → works[] → components[]` ;
@@ -54,9 +54,9 @@ Le format reste :
 
 La version devient :
 
-`1.2`
+`1.3`
 
-L’enveloppe 1.1 est conservée :
+L’enveloppe 1.2 est conservée :
 
 - `format`
 - `format_version`
@@ -71,11 +71,9 @@ L’enveloppe 1.1 est conservée :
 - `checks`
 - `review`
 
-Un nouveau bloc est ajouté :
+Le bloc `workflow` introduit en 1.2 est conservé.
 
-`workflow`
-
-## 1.1 Apports spécifiques de la version 1.3
+## 2.1 Apports spécifiques de la version 1.3
 
 La version 1.3 ajoute quatre distinctions structurantes :
 
@@ -91,7 +89,7 @@ Ces éléments ne doivent plus être déduits de textes libres.
 Le contrat cible est donc :
 
 ```text
-erp-artisans-quote-study 1.2
+erp-artisans-quote-study 1.3
 │
 ├── metadata
 ├── target
@@ -878,11 +876,11 @@ La V3.10 travaille avec le contrat `erp-artisans-quote-study` **1.3**.
 
 Sont explicitement hors périmètre :
 
-- migration automatique `1.1 → 1.2` ;
+- migration automatique `1.1/1.2 → 1.3` ;
 - import des anciens formats `cid-devis-echanges` ;
 - chaînes de migration entre les versions historiques de la plateforme.
 
-Si une ancienne étude doit être reprise, le chat/assistant ayant produit le fichier doit la relire et produire un nouveau document conforme au contrat 1.2.
+Si une ancienne étude doit être reprise, le chat/assistant ayant produit le fichier doit la relire et produire un nouveau document conforme au contrat 1.3.
 
 L’objectif est de ne pas introduire de dette technique de compatibilité dans un outil transitoire destiné à converger ultérieurement vers ERP Artisans.
 
