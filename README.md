@@ -12,7 +12,7 @@ Un chat ou un outil IA doit lire le manifeste, puis charger dans l'ordre tous le
 
 ## Version active
 
-- Ruleset : `2026.10.16.1`
+- Ruleset : `2026.10.18.1`
 - Contrat JSON : `erp-artisans-quote-study` version `1.3`
 
 ## Contenu
