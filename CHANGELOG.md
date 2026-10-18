@@ -1,5 +1,11 @@
 # Historique du ruleset C.I.D. Devis IA
 
+## 2026.10.18.1 — Correction documentaire du contrat 1.3
+
+- correction des dernières mentions héritées de la version 1.2 dans `CONTRAT_DEVIS_1.3.md` ;
+- clarification : le contrat 1.3 conserve l’enveloppe et le bloc `workflow` de la version 1.2 ;
+- reprise d’une ancienne étude : le document régénéré doit être conforme au contrat actif 1.3.
+
 ## 2026.10.16.1 — Contrat 1.3 et contrôles structurés
 
 - passage du contrat actif `erp-artisans-quote-study` de **1.2 à 1.3** ;
